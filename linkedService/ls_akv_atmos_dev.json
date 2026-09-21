@@ -1,0 +1,11 @@
+{
+	"name": "ls_akv_atmos_dev",
+	"properties": {
+		"description": " ",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-atmos-dev-eastus-001.vault.azure.net/"
+		}
+	}
+}
