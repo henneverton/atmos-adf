@@ -3,6 +3,51 @@
 	"properties": {
 		"activities": [
 			{
+				"name": "set_date",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "v_date",
+					"value": {
+						"value": "@if(empty(pipeline().parameters.date), formatDateTime(utcnow(), 'yyyy-MM-dd'), pipeline().parameters.date)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "web_get_apikey",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "set_date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://kv-atmos-dev-eastus-001.vault.azure.net/secrets/visualcrossing-api-key-dev/1f3710a4cc584c508e2c386da40cf3b0?api-version=2025-07-01",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net/"
+					}
+				}
+			},
+			{
 				"name": "Copy_visualcrossing_to_landing",
 				"type": "Copy",
 				"dependsOn": [
@@ -53,7 +98,7 @@
 								"type": "Expression"
 							},
 							"date": {
-								"value": "@formatDateTime(utcnow(), 'yyyy-MM-dd')",
+								"value": "@variables('v_date')",
 								"type": "Expression"
 							},
 							"apikey": {
@@ -73,46 +118,27 @@
 								"type": "Expression"
 							},
 							"date": {
-								"value": "@pipeline().parameters.date",
+								"value": "@variables('v_date')",
 								"type": "Expression"
 							},
 							"file_name": {
-								"value": "@toLower(concat('atmos_',pipeline().parameters.city,'_',formatDateTime(utcNow(),'yyyymmddhhmmss'),'.json'))",
+								"value": "@toLower(concat('atmos_',pipeline().parameters.city,'_',formatDateTime(utcnow(),'yyyyMMddHHmmss'),'.json'))",
 								"type": "Expression"
 							}
 						}
 					}
 				]
-			},
-			{
-				"name": "web_get_apikey",
-				"type": "WebActivity",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"method": "GET",
-					"url": "https://kv-atmos-dev-eastus-001.vault.azure.net/secrets/visualcrossing-api-key-dev/1f3710a4cc584c508e2c386da40cf3b0?api-version=2025-07-01",
-					"authentication": {
-						"type": "MSI",
-						"resource": "https://vault.azure.net/"
-					}
-				}
 			}
 		],
 		"parameters": {
 			"city": {
 				"type": "string",
 				"defaultValue": "brasilia"
-			},
-			"date": {
-				"type": "string"
+			}
+		},
+		"variables": {
+			"v_date": {
+				"type": "String"
 			}
 		},
 		"folder": {
