@@ -7,14 +7,7 @@
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "web_get_apikey",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -100,7 +93,7 @@
 					"url": "https://kv-atmos-dev-eastus-001.vault.azure.net/secrets/visualcrossing-api-key-dev/1f3710a4cc584c508e2c386da40cf3b0?api-version=2025-07-01",
 					"authentication": {
 						"type": "MSI",
-						"resource": "https://vault.azure.net/.default"
+						"resource": "https://vault.azure.net/"
 					}
 				}
 			}
