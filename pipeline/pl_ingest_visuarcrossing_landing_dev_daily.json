@@ -113,7 +113,7 @@
 			},
 			"date": {
 				"type": "string",
-				"defaultValue": "@utcnow('yyyy-mm-dd')"
+				"defaultValue": "@utcnow('yyyy-MM-dd')"
 			}
 		},
 		"folder": {
