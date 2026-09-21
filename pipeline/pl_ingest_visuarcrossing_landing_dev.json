@@ -5,7 +5,16 @@
 			{
 				"name": "Copy_visualcrossing_to_landing",
 				"type": "Copy",
-				"dependsOn": [],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "web_get_apikey",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -73,6 +82,27 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "web_get_apikey",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://kv-atmos-dev-eastus-001.vault.azure.net/secrets/visualcrossing-api-key-dev/1f3710a4cc584c508e2c386da40cf3b0?api-version=2025-07-01",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net/.default"
+					}
+				}
 			}
 		],
 		"parameters": {
