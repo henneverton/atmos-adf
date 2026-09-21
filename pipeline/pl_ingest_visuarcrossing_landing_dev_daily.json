@@ -5,14 +5,7 @@
 			{
 				"name": "set_date",
 				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "web_get_apikey",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
@@ -29,7 +22,14 @@
 			{
 				"name": "web_get_apikey",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "set_date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -52,7 +52,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "set_date",
+						"activity": "web_get_apikey",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -134,6 +134,9 @@
 			"city": {
 				"type": "string",
 				"defaultValue": "brasilia"
+			},
+			"date": {
+				"type": "string"
 			}
 		},
 		"variables": {
