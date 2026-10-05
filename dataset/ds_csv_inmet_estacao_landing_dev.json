@@ -1,0 +1,38 @@
+{
+	"name": "ds_csv_inmet_estacao_landing_dev",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "INMET"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@toLower(\n    concat(\n        'landing/inmet/microdados/',\n        dataset().id_estacao,\n        '/ano=', \n        dataset().ano\n\n))",
+					"type": "Expression"
+				},
+				"fileSystem": "atmos-landing-dev-001"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

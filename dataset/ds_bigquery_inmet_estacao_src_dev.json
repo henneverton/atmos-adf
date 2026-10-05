@@ -1,0 +1,15 @@
+{
+	"name": "ds_bigquery_inmet_estacao_src_dev",
+	"properties": {
+		"folder": {
+			"name": "inmet"
+		},
+		"annotations": [],
+		"type": "GoogleBigQueryV2Object",
+		"schema": [],
+		"typeProperties": {
+			"dataset": "br_inmet_bdmep",
+			"table": "estacao"
+		}
+	}
+}

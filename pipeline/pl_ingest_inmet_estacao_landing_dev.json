@@ -1,0 +1,62 @@
+{
+	"name": "pl_ingest_inmet_estacao_landing_dev",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_inmet_estacao_to_landing",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.01:00:00",
+					"retry": 1,
+					"retryIntervalInSeconds": 60,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "GoogleBigQueryV2Source",
+						"query": "SELECT * FROM basedosdados.br_inmet_bdmep.estacao"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_bigquery_inmet_estacao_src_dev",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_csv_inmet_estacao_landing_dev",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "inmet"
+		},
+		"annotations": []
+	}
+}
