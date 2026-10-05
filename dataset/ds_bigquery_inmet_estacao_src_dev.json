@@ -2,7 +2,7 @@
 	"name": "ds_bigquery_inmet_estacao_src_dev",
 	"properties": {
 		"folder": {
-			"name": "inmet"
+			"name": "INMET"
 		},
 		"annotations": [],
 		"type": "GoogleBigQueryV2Object",
