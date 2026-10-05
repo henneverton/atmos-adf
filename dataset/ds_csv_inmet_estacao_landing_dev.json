@@ -22,10 +22,7 @@
 					"value": "@dataset().file_name",
 					"type": "Expression"
 				},
-				"folderPath": {
-					"value": "@toLower(\n    concat(\n        'landing/inmet/microdados/',\n        dataset().id_estacao,\n        '/ano=', \n        dataset().ano\n\n))",
-					"type": "Expression"
-				},
+				"folderPath": "landing/inmet/estacao",
 				"fileSystem": "atmos-landing-dev-001"
 			},
 			"columnDelimiter": ",",
